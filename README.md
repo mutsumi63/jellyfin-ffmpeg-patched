@@ -34,6 +34,19 @@ and in the [wiki](https://trac.ffmpeg.org).
 
 Coding examples are available in the **doc/examples** directory.
 
+## ffmpeg-over-ip Patch
+
+This build includes the `ffmpeg-over-ip` file I/O layer for Jellyfin FFmpeg.
+It wraps FFmpeg's `file` protocol operations in `libavformat`, including
+open, read, write, seek, close, stat, delete, rename, and directory creation.
+
+By default, when `FFOIP_PORT` is not set, the wrapper passes all file I/O
+through to the normal local system calls. When `FFOIP_PORT` is set, FFmpeg
+connects to `127.0.0.1:$FFOIP_PORT` and tunnels those file operations over
+TCP to the ffmpeg-over-ip companion process. This allows FFmpeg to run on a
+different machine or architecture while still accessing media and generated
+outputs through the companion process.
+
 ## License
 
 FFmpeg codebase is mainly LGPL-licensed with optional components licensed under
